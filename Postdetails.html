@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Imbort axios  -->
+<!-- Import axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Imbort axios  -->
+<!-- Imbort bootstrap -->
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+<!-- //Imbort bootstrap // -->
+    <style>
+        body{
+            background-color: #f0ecff;
+
+        }.card{
+            margin-top: 30px;
+        }
+
+
+
+#success-Alert .toast-body {
+    font-size: 1rem; /* Adjust as needed */
+}
+#alert-close{
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+#success-Alert .toast-header {
+
+
+}#Add-btn{
+    position: fixed;
+    bottom: 5%;
+    right: 7%;
+    font-size: 50px;
+    color: white;
+     background-color: blue;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 50%;
+    margin-right: -50px;
+    line-height: 1.1;
+
+}/* ============ Loader Style ============ */
+
+
+.lds-roller,
+.lds-roller div,
+.lds-roller div:after {
+  box-sizing: border-box;
+}
+.lds-roller {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-roller div {
+  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 40px 40px;
+}
+.lds-roller div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 7.2px;
+  height: 7.2px;
+  border-radius: 50%;
+  background: currentColor;
+  margin: -3.6px 0 0 -3.6px;
+}
+.lds-roller div:nth-child(1) {
+  animation-delay: -0.036s;
+}
+.lds-roller div:nth-child(1):after {
+  top: 62.62742px;
+  left: 62.62742px;
+}
+.lds-roller div:nth-child(2) {
+  animation-delay: -0.072s;
+}
+.lds-roller div:nth-child(2):after {
+  top: 67.71281px;
+  left: 56px;
+}
+.lds-roller div:nth-child(3) {
+  animation-delay: -0.108s;
+}
+.lds-roller div:nth-child(3):after {
+  top: 70.90963px;
+  left: 48.28221px;
+}
+.lds-roller div:nth-child(4) {
+  animation-delay: -0.144s;
+}
+.lds-roller div:nth-child(4):after {
+  top: 72px;
+  left: 40px;
+}
+.lds-roller div:nth-child(5) {
+  animation-delay: -0.18s;
+}
+.lds-roller div:nth-child(5):after {
+  top: 70.90963px;
+  left: 31.71779px;
+}
+.lds-roller div:nth-child(6) {
+  animation-delay: -0.216s;
+}
+.lds-roller div:nth-child(6):after {
+  top: 67.71281px;
+  left: 24px;
+}
+.lds-roller div:nth-child(7) {
+  animation-delay: -0.252s;
+}
+.lds-roller div:nth-child(7):after {
+  top: 62.62742px;
+  left: 17.37258px;
+}
+.lds-roller div:nth-child(8) {
+  animation-delay: -0.288s;
+}
+.lds-roller div:nth-child(8):after {
+  top: 56px;
+  left: 12.28719px;
+}
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+#logo{
+  width: 40px;
+    height: 40px;
+    border-radius: 10px;
+}
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1064a0;
+}
+
+/* ============ //  Loader Style // ============ */
+    </style>
+        <title>Post Details</title>
+
+</head>
+<body>
+
+<!-- ========================  loader ============================ -->
+<div id="loader" style="position: fixed; background: rgba(128, 128, 128, 0.234); top: 0;bottom: 0; left: 0px; right: 0px; margin: 250px auto ; display: flex; justify-content: center; align-items: center; z-index: 9999; width: 100PX; height: 100PX; border-radius: 50%;">
+ 
+ 
+ 
+  <div class="lds-roller">
+    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+  
+  </div>
+ 
+ 
+    </div>
+<!-- ========================  loader ============================ -->
+    <!--Login Modals -->
+
+<div class="modal fade" id="loginmodal" tabindex="-1" aria-labelledby="loginmodalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="loginmodalLabel">Login</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">User Name</label>
+              <input type="text" class="form-control" id="recipient-name" value="yarob19999">
+            </div>
+            <div class="mb-3">
+              <label for="Password" class="col-form-label">Password</label>
+              <input type="password" class="form-control" id="Password" value="HelloWorld"></input>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button onclick="loginBtnclicked()" type="button" class="btn btn-primary  "   >Login </button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- //Login  Modals// -->
+
+
+  <!-- Create Post Modal  -->
+
+      <div class="modal fade" id="create-post-modal" tabindex="-1" aria-labelledby="loginmodalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="loginmodalLabel">Write a New Post !  </h1>
+              <button type="button" onclick="clearAllInputs()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="Title-input" class="col-form-label">Post Title</label>
+                  <input type="text" class="form-control" id="Title-input" >
+                </div> <div class="mb-3">
+                    <label for="Title-input" class="col-form-label">Post Body</label>
+                    <input name="Body" type="text" id="post-body" class="form-control" style="width: 100%; height: 100px; border-radius: 10px;">
+              
+                </div>
+                <label for="Title-input" class="col-form-label">Image</label>
+                <input placeholder="done " type="file" class="form-control bg-primry" id="post-image-input" style="background-color: blue;color: white;"  >              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" onclick="clearAllInputs()" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button onclick="createNewPostBtnclicked()" type="button" class="btn btn-primary  "   >Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  <!--// Create Post Modal // -->
+    <!-- Add Post Button -->
+<!--
+<div id="Add-btn" class="bg-primry"  data-bs-toggle="modal" data-bs-target="#create-post-modal">+ -->
+
+<!-- </div> -->
+    <!--// Add Post Button // -->
+
+      <!--Register Modals -->
+
+<div class="modal fade" id="Register-modal" tabindex="-1" aria-labelledby="loginmodalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="loginmodalLabel">Register a New User </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="Register-name-input" class="col-form-label">Name</label>
+              <input type="text" class="form-control" id="Register-name-input" >
+            </div>
+            <div class="mb-3">
+                <label for="Register-Username-input" class="col-form-label">User Name</label>
+                <input type="text" class="form-control" id="Register-Username-input" value="yarob19999">
+            </div>
+            <div class="mb-3">
+                <label for="Title-input" class="col-form-label">Image</label>
+                <input  type="file" class="form-control bg-primry" id="Register-image-input" style="background-color: blue;color: white;"  >              </form>
+
+            </div>
+            <div class="mb-3">
+              <label for="Register-Password-input" class="col-form-label">Password</label>
+              <input type="password" class="form-control" id="Register-Password-input" value="HelloWorld"></input>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button onclick="RegisterBtnclicked()" type="button" class="btn btn-primary bg-primry "   >Register </button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- //Register  Modals// -->
+
+
+
+     <!-- ALERT -->
+      <!-- SUCCESS ALERT -->
+      <div id="toastContainer" style="position: fixed; bottom: 20px; right: 20px; z-index: 1050;">
+        <div id="success-Alert" class="toast fade" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+            <div class="toast-header">
+                <strong class="toast-title me-auto">Title</strong> <!-- Placeholder for the title -->
+                <button id="alert-close" type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <!-- Placeholder for the message -->
+            </div>
+        </div>
+    </div>
+      <!-- NAV BAR CONTAINER -->
+      <div class="d-flex justify-content-center">
+
+        <div class="col-9 ">
+
+            <div class="container   ">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary shadow rounded pt-3">
+                <div class="container-fluid" >
+                  <a style=" color: white; border-radius: 10px;width: 50px; text-align: center;" class="navbar-brand bg-primary " href="Home.html"> Beta</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                   <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav nav-pills">
+                  <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="Home.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link"  onclick="profileClicked()" style="cursor: pointer;">Profile</a>
+                </li>
+
+              </ul>
+                   <!-- None logged in User -->
+                   <div class="d-flex  w-100 justify-content-end"  >
+
+                       <button   id="logbtn"  type="button" class="btn btn-outline-success mx-2 "data-bs-toggle="modal" data-bs-target="#loginmodal">Login</button>
+                       <button id="Regbtn" type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#Register-modal">Register</button>
+                       <!-- // None logged  User// -->
+                       <!-- logged out  User  -->
+                   </div>
+                  <img id="Nav-user-image" src="./profilepic/Mounten.jpeg" alt="profile.pic" style="width: 30px;height: 30px ;border-radius: 50%;">
+                  <span id="Nav-user-name" style="margin: 5px;">@UserName</span>
+                   <button   id="logoutbtn"  type="button" class="btn btn-outline-danger mx-2 "onclick="Logout()">Logout</button>
+
+                   </div>
+               <!-- // logged out User // -->
+           </div>
+       </nav>
+   </div>
+</div>
+</div>
+<div  class="container  " style="  height:1000px; ">
+    <!-- Content here -->
+    <div class="d-flex justify-content-center row mt-5 ">
+        <div class="col-9">
+
+            <h1>
+
+
+                <span id="user-id-span">
+                    Bilal's
+                </span>
+                post
+            </h1>
+        </div>
+
+          </div>
+          <!-- post  -->
+
+          <div class="d-flex justify-content-center row mt-5 ">
+            <div class="col-9" id="post">
+    <!-- post card -->
+    <div class="card shadow "  >
+        <div class="card-header">
+            
+                        <img src="./profilepic/services.jpg" alt="" class=" border-3" style="width: 40px;height: 40px; border-radius: 50%;">
+                        <b>@Bilal</b>
+                    </div>
+                    <div class="card-body">
+                        <img src="./profilepic/Mounten.jpeg" alt="" class="w-100 h-50">
+                        <h6 class="m-1" style="color: rgb(193,193,193);"> 2 min ago </h6>
+                        <h5>Hello Dear                 </h5>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, quam ducimus voluptatum repellat id, perferendis, sequi temporibus sunt illum accusamus nobis quasi saepe dicta in laudantium nulla! Labore, harum esse.
+
+        </p>
+        <hr>
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+            </svg>
+            <span>(3) Comment</span>
+            
+        </div>
+    </div>
+        <!-- comments -->
+<div id="comments">
+
+    <div class="p-3" style="background-color: white;">
+        <!-- profile pic + User Name -->
+         
+         <img src="./profilepic/image.jpg" alt="" style="height: 32px;width: 32px;border-radius: 50%;">
+         <b>@User Name</b>
+            <!--// profile pic + User Name// -->
+            <!-- comments  -->
+            <div id="comments">
+                
+                <!-- comment Body -->
+                <div>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit atque quod repellat tempore doloremque amet distinctio at nostrum placeat itaque aliquam unde nam incidunt ullam quisquam repellendus aliquid, ipsam nobis?     
+                    
+                </div>
+                <!-- //comment Body// -->
+            </div>
+            <!-- //comments // -->
+             <!-- Write  comment -->       <!-- comments -->
+<div id="comments">
+
+    <div class="p-3" style="background-color: white;">
+        <!-- profile pic + User Name -->
+         
+         <img src="./profilepic/image.jpg" alt="" style="height: 32px;width: 32px;border-radius: 50%;">
+         <b>@User Name</b>
+            <!--// profile pic + User Name// -->
+            <!-- comments  -->
+            <div id="comments">
+                
+                <!-- comment Body -->
+                <div>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit atque quod repellat tempore doloremque amet distinctio at nostrum placeat itaque aliquam unde nam incidunt ullam quisquam repellendus aliquid, ipsam nobis?     
+                    
+                </div>
+                <!-- //comment Body// -->
+            </div>
+            <!-- //comments // -->
+            
+        </div>
+    </div>
+            <!-- Write  comment -->
+            <!--// post card// -->
+        </div>
+    </div>
+    
+    <div style="width: calc(100% - 40px); margin: 0 auto 20px auto; position: relative; height: 50px; border: 1px solid blue; border-radius: 10px; padding: 0 10px;">
+        <input type="text" id="Comment-input" placeholder="Write your Comment here"
+               style="width: 90%; height: 100%; padding: 10px; box-sizing: border-box; border: none; outline: none; border-radius: 10px; padding-left: 10px;">
+        <button id="postCommentbtn" type="button" class="btn btn-outline-primary" onclick="postComment()"
+                style="position: absolute; top: 0; right: 0; width: 11%; height: 100%; z-index: 1; border-radius: 10px;">Send</button>
+    </div>
+    
+    
+    
+                <!--// Write // comment -->
+<!-- post  -->
+          </div>
+       <!-- //NAV BAR CONTAINER //-->
+       <script src="./mainLogic.js"></script>
+<script>
+    const urlParams= new URLSearchParams(window.location.search)
+    const ID =  urlParams.get("postId")
+
+    function GetPost() {
+        const BaseUrl="https://tarmeezacademy.com/api/v1"
+        
+        let url = `${BaseUrl}/posts/${ID}`;
+        toggleLoader(true)
+        axios.get(url)
+        .then((response) => {
+          console.log(response)
+           const post = response.data.data;
+           const Comments = post.comments;
+           const Author = post.author;
+           document.getElementById("user-id-span").innerHTML=Author.username
+           console.log(Author.username)
+           let commentscontent =``
+           for(comment of Comments){
+            commentscontent+=
+            `   <div class="p-3" style="background-color: white;">
+                        <!-- profile pic + User Name -->
+                    
+                    <img src="${comment.author.profile_image}" alt="" style="height: 32px;width: 32px;border-radius: 50%;">
+                    <b>@${comment.author.username}</b>
+                        <!--// profile pic + User Name// -->
+                        <!-- comments  -->
+                        <div id="comments">
+
+                            <!-- comment Body -->
+                            <div>
+                                ${comment.body}                                
+                            </div>
+                            <!-- //comment Body// -->
+                        </div>
+                        <!-- //comments // -->
+                    </div>
+                    <!--// comments// -->
+                    
+          
+                    `
+           }
+            const postContent=           ` 
+
+
+            <div class="card shadow " >
+        <div class="card-header">
+                        <span onclick="userOnClicked()" style="cursor: pointer;"> 
+                        <img src="${post.author.profile_image}" alt="" class=" border-3" style="width: 40px;height: 40px; border-radius: 50%;">
+                        <b>@${Author.username}</b>
+                          </span>
+                        </div>
+                    <div class="card-body">
+                        <img src="${post.image}" alt="" class="w-100 h-50">
+                        <h6 class="m-1" style="color: rgb(193,193,193);"> ${post.created_at} </h6>
+                        <h5>${post.title}</h5>
+        <p> ${post.body}
+
+        </p>
+        <hr>
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+            </svg>
+            <span>(${post.comments_count}) Comment</span>
+            
+        </div>
+        <div id ="comments">
+                ${commentscontent}
+    </div>
+    </div>
+          
+    
+                <div style="width: calc(100% - 40px); margin: 0 auto 20px auto; position: relative; height: 50px; border: 1px solid blue; border-radius: 10px; padding: 0 10px;">
+        <input type="text" id="Comment-input" placeholder="Write your Comment here"
+               style="width: 90%; height: 100%; padding: 10px; box-sizing: border-box; border: none; outline: none; border-radius: 10px; padding-left: 10px;">
+        <button id="postCommentbtn" type="button" class="btn btn-outline-primary" onclick="postComment()"
+                style="position: absolute; top: 0; right: 0; width: 11%; height: 100%; z-index: 1; border-radius: 10px;">Send</button>
+    </div>
+    `
+
+
+           document.getElementById("post").innerHTML=postContent
+        }).catch(error => {
+          const message = error.response.data.message;
+       ShowAlert("Post Loaded Failed",message,"danger")
+         }).finally(()=>{
+          toggleLoader(false)
+         })
+        }
+
+
+
+
+ SetupUI()
+ function postComment() {
+    const BaseUrl = "https://tarmeezacademy.com/api/v1";
+
+    let commentText = document.getElementById("Comment-input").value;
+    let body = document.getElementById("Comment-input").value;
+    let params = { "body": body };
+    let token = localStorage.getItem("token");
+
+    if (commentText.trim() === "") {
+        ShowAlert("Comment cannot be empty.", "error", "danger");
+        return;
+    }
+
+    toggleLoader(true);
+
+    axios.post(`${BaseUrl}/posts/${ID}/comments`, params, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "authorization": `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            ShowAlert("Comment posted successfully.", "success", "success");
+            document.getElementById("Comment-input").value = ""; // Clear the input
+            GetPost(); // Refresh the post content to include the new comment
+        })
+        .catch(error => {
+            const message = error.response?.data?.message || "An error occurred";
+            ShowAlert("Failed to post comment.", message, "danger");
+        })
+        .finally(() => {
+            toggleLoader(false);
+        });
+}
+
+GetPost()
+</script>
+<script src="./mainLogic.js"></script>
+      </body>
+</html>
