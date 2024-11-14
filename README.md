@@ -14,7 +14,7 @@ The main purpose of this project is to enhance my skills in front-end developmen
 Explore the project:
 
 GitHub Repository: https://github.com/BILALTITI/Beta-Project-.git
-Live Demo: https://heartfelt-moxie-ba2445.netlify.app/
+Live Demo: https://sweet-panda-d8f358.netlify.app/
 ⚠️ Please note: This project is for learning purposes only. Avoid sharing any private or sensitive information as the project is not intended for real-world data handling.
 
 📞 Feedback & Contact
